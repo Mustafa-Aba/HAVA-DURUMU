@@ -2,12 +2,17 @@ const wrapper = document.querySelector(".wrapper"),
   inputPart = wrapper.querySelector(".input-part"),
   infoTxt = inputPart.querySelector(".info-txt"),
   inputField = inputPart.querySelector("input"),
-locationBtn = inputPart.querySelector("button")
-wIcon=document.querySelector(".weather-part img")
-arrowBack= document.querySelector("header i")
+  searchBtn = inputPart.querySelector("#search-btn"),
+  locationBtn = inputPart.querySelector("#location-btn"),
+  wIcon=document.querySelector(".weather-part img"),
+  arrowBack= document.querySelector("header i");
 let api;
 
-
+// Yeni Arama Butonu Olayı
+searchBtn.addEventListener("click", () => {
+  const cityName = inputField.value;
+  requestApi(cityName);
+});
 
 inputField.addEventListener("keyup", (e) => {
   if (e.key == "Enter" && inputField.value != "") {
@@ -27,8 +32,10 @@ function onError(error) {
   infoTxt.classList.add("error");
 }
 function onSuccess(position) {
+  console.log(position); // Konum bilgilerini kontrol edin
   const { latitude, longitude } = position.coords;
-  api = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=f3ffc1942c3f8c60773ad82d8b7f2c7f`;
+  console.log(latitude, longitude); // Enlem ve boylam değerlerini kontrol edin
+  api = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=f3ffc1942c3f8c60773ad82d8b7f2c7f`;
   fetchData();
 }
 
